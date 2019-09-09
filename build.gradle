@@ -25,3 +25,11 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+task hello{
+    description "Hey! anyone?"
+    group "candy"
+    doLast{
+        println "LMM"
+    }
+}
