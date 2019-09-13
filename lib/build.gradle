@@ -1,0 +1,10 @@
+apply plugin:"java"
+
+task runJava(type: JavaExec){
+    main = "com.viva.Main"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task javaDoc(type: Javadoc){
+    source = sourceSets.main.allJava
+}

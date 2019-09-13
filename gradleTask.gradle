@@ -1,0 +1,73 @@
+task hello {
+    group "taskTest"
+    description "test for task config"
+    doLast{
+        println "hello Task"
+    }
+}
+
+//任务依赖=》dependsOn 前置依赖
+// finalizedBy 后置依赖：完成任务之后再做什么
+// shouldRunAfter 建议A任务应该在b任务之后进行
+// mustFunAfter
+task putOnSocks{
+    doLast{
+        println "Putting on Socks"
+    }
+}
+
+task putOnShoes{
+    dependsOn "putOnSocks"
+    doLast{
+        println "Putting on Shoes"
+    }
+}
+
+//获取所有task的名字
+task printlnTaskName{
+    tasks.each {println "task name is ${it.name}"}
+}
+
+// 定义type为Copy的函数，即具备了复制能力，告诉该复制模版，数据源和输出位置即可，会自动创建目录
+task copyFileTest(type: Copy){
+    from './' //配置数据源
+    include '*.gradle' //配置筛选条件
+    into "./copy" // 配置目标地址
+}
+
+task copyFiles(type: Copy){
+    from("./"){
+       include '*.md'
+        into 'md'
+    }
+    from("./"){
+        include '*.gradle'
+        into 'gradle'
+    }
+    into 'files'
+}
+
+task zipMdFile(type: Zip){
+    baseName = "test"
+    destinationDir = file('build')
+    from('gradle/wrapper'){
+        include '*.jar'
+    }
+}
+
+task deleteBuild(type: Delete){
+    delete 'build'
+}
+
+class HelloNameTask extends DefaultTask {
+    String firstName
+
+    @TaskAction
+    void doAction(){
+        println "hello, $firstName"
+    }
+}
+
+task helloTask(type: HelloNameTask){
+    firstName = 'lmm'
+}

@@ -33,3 +33,10 @@ task hello{
         println "LMM"
     }
 }
+
+task foobar{
+    doLast {
+        def foo = "bar"
+        println "$foo + foo equals ${foo + 'foo'}"
+    }
+}
